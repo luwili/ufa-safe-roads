@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ОСАГО+ Уфа | Синхронизация через Госуслуги и скидка за аккуратное вождение</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Шапка сервиса -->
+  <header class="gu-header">
+    <div class="container gu-header-inner">
+      <a href="#top" class="gu-brand">
+        <span class="gu-logo" aria-hidden="true">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+            <rect width="32" height="32" rx="9" fill="#0D4CD3"/>
+            <path d="M16 7L24 10.8V16.2C24 21 20.6 24.7 16 26C11.4 24.7 8 21 8 16.2V10.8L16 7Z" stroke="white" stroke-width="2"/>
+            <path d="M12.2 16.3L14.8 18.9L20.2 13.5" stroke="#4ADE80" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </span>
+        <span class="gu-brand-text">
+          <strong>ОСАГО+ <span class="accent-dot">·</span> Уфа</strong>
+          <small>Региональный сервис поощрения водителей</small>
+        </span>
+      </a>
+
+      <div class="gu-nav-actions">
+        <a href="../index.html" class="btn-link">Карта Уфы и умные дороги</a>
+        <button type="button" id="header-auth-btn" class="btn btn-gu btn-sm">
+          <span>Показать демо ЕСИА</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="top" class="container main-wrap">
+    <!-- Экран приветствия / авторизации (до синхронизации) -->
+    <section id="welcome-view" class="welcome-section">
+      <div class="welcome-grid">
+        <div class="welcome-copy">
+          <div class="pill-badge">
+            <span class="gu-flag"></span>
+            <span>Интерактивный прототип синхронизации с ЕСИА</span>
+          </div>
+          <h1>Скидка на ОСАГО до 12% за спокойную езду без нарушений</h1>
+          <p class="welcome-lead">
+            Это демонстрационный сценарий: вход через Госуслуги не выполняется, данные ЕСИА или ГИБДД не запрашиваются. Посмотрите, как пример скидки меняется в зависимости от числа нарушений за последние 12 месяцев.
+          </p>
+
+          <div class="welcome-cta">
+            <button type="button" id="btn-open-gu" class="btn btn-gu btn-lg">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>
+              <span>Показать сценарий ЕСИА</span>
+            </button>
+            <button type="button" id="btn-quick-demo" class="btn btn-soft btn-lg">Посмотреть готовый кабинет</button>
+          </div>
+
+          <div class="trust-list">
+            <div class="trust-item">
+              <strong>Прозрачно</strong>
+              <span>Нарушил - обычный штраф. Соблюдал год - получил скидку.</span>
+            </div>
+            <div class="trust-item">
+              <strong>Автоматически</strong>
+              <span>Запрос к ЕСИА и ГИБДД только имитируется локально.</span>
+            </div>
+            <div class="trust-item">
+              <strong>Без лишних данных</strong>
+              <span>Не отслеживаем маршруты и геолокацию, только факт нарушений.</span>
+            </div>
+          </div>
+        </div>
+
+        <aside class="scale-card">
+          <div class="scale-card-head">
+            <h2>Простая шкала скидки на ОСАГО</h2>
+            <p>Зависит только от числа нарушений ПДД за последние 12 месяцев</p>
+          </div>
+          <div class="scale-items">
+            <div class="scale-pill best">
+              <div>
+                <strong>0 нарушений</strong>
+                <span>Идеальный год на дорогах</span>
+              </div>
+              <span class="pct">-12%</span>
+            </div>
+            <div class="scale-pill">
+              <div>
+                <strong>1 нарушение</strong>
+                <span>Обычный штраф + сохранение скидки</span>
+              </div>
+              <span class="pct">-9%</span>
+            </div>
+            <div class="scale-pill">
+              <div>
+                <strong>2 нарушения</strong>
+                <span>Умеренная скидка при продлении</span>
+              </div>
+              <span class="pct">-6%</span>
+            </div>
+            <div class="scale-pill">
+              <div>
+                <strong>3 нарушения</strong>
+                <span>Минимальный порог поощрения</span>
+              </div>
+              <span class="pct">-3%</span>
+            </div>
+            <div class="scale-pill zero">
+              <div>
+                <strong>4 и более нарушений</strong>
+                <span>Стандартный тариф без скидки</span>
+              </div>
+              <span class="pct">0%</span>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- Синхронизированный личный кабинет водителя -->
+    <section id="dashboard-view" class="dashboard-section hidden">
+      <!-- Верхняя карточка профиля из Госуслуг -->
+      <div class="profile-banner">
+        <div class="profile-left">
+          <div class="profile-avatar">АА</div>
+          <div>
+            <div class="sync-chip">
+              <span class="sync-dot"></span>
+              <span>Демонстрационный сценарий ЕСИА · <em id="sync-time">не подключено</em></span>
+            </div>
+            <h2>Демо-профиль водителя</h2>
+            <p class="profile-meta">Тестовые данные · г. Уфа</p>
+          </div>
+        </div>
+        <div class="profile-right">
+          <button type="button" id="btn-resync" class="btn btn-soft btn-sm">Повторить демо</button>
+          <button type="button" id="btn-logout" class="btn btn-ghost btn-sm">Выйти</button>
+        </div>
+      </div>
+
+      <!-- Переключатель сценариев для демонстрации прототипа -->
+      <div class="scenario-bar">
+        <span class="scenario-label">Проверка сценариев (прототип):</span>
+        <div class="scenario-buttons" id="scenario-buttons">
+          <button type="button" class="scen-btn active" data-v="0">0 нарушений (12%)</button>
+          <button type="button" class="scen-btn" data-v="1">1 нарушение (9%)</button>
+          <button type="button" class="scen-btn" data-v="2">2 нарушения (6%)</button>
+          <button type="button" class="scen-btn" data-v="3">3 нарушения (3%)</button>
+          <button type="button" class="scen-btn" data-v="4">4+ нарушений (0%)</button>
+        </div>
+      </div>
+
+      <!-- Основная сетка кабинета -->
+      <div class="dash-grid">
+        <!-- Левая колонка: статус скидки + расчет -->
+        <div class="dash-col">
+          <div class="card hero-status-card" id="status-card">
+            <div class="status-top">
+              <div>
+                <span class="muted-label">Ваша скидка на ОСАГО</span>
+                <div class="big-discount" id="dash-discount">12%</div>
+              </div>
+              <div class="viol-counter-box">
+                <strong id="dash-viol-count">0</strong>
+                <span>нарушений за 12 мес.</span>
+              </div>
+            </div>
+            <p class="status-message" id="dash-message">
+              Отличный результат! За последние 12 месяцев нарушений ПДД не зафиксировано. Вам доступна максимальная скидка 12% при оформлении ОСАГО.
+            </p>
+            <div class="progress-steps" id="dash-steps"></div>
+          </div>
+
+          <!-- Быстрый расчет стоимости полиса -->
+          <div class="card">
+            <div class="card-head-row">
+              <h3>Расчет вашего полиса ОСАГО</h3>
+              <span class="muted-label">Базовая цена -> со скидкой</span>
+            </div>
+            <div class="slider-block">
+              <label for="dash-osago-range">
+                <span>Стоимость полиса без скидки</span>
+                <strong id="dash-base-val">10 500 ₽</strong>
+              </label>
+              <input type="range" id="dash-osago-range" min="4000" max="25000" step="500" value="10500">
+            </div>
+            <div class="price-summary">
+              <div>
+                <span>Экономия по программе</span>
+                <strong class="text-green" id="dash-save-val">- 1 260 ₽</strong>
+              </div>
+              <div>
+                <span>Итого к оплате за ОСАГО</span>
+                <strong class="final-rub" id="dash-final-val">9 240 ₽</strong>
+              </div>
+            </div>
+          </div>
+
+          <!-- История постановлений ГИБДД за 12 месяцев -->
+          <div class="card">
+            <div class="card-head-row">
+              <h3>Примеры постановлений за последние 12 месяцев</h3>
+              <span class="muted-label" id="decree-subtitle">Демо-постановления</span>
+            </div>
+            <div id="decree-list" class="decree-list"></div>
+          </div>
+        </div>
+
+        <!-- Правая колонка: электронный сертификат и передача в страховую -->
+        <div class="dash-col">
+          <div class="card cert-card" id="cert-card">
+            <div class="cert-header">
+              <div>
+                <span class="cert-eyebrow">Макет сертификата · демо</span>
+                <h3>Скидка на ОСАГО · Республика Башкортостан</h3>
+              </div>
+              <span class="cert-status" id="cert-status-pill">Макет</span>
+            </div>
+
+            <div class="cert-body">
+              <div class="cert-fields">
+                <div><span>Владелец</span><strong>Демонстрационный пользователь</strong></div>
+                <div><span>Автомобиль</span><strong>Тестовый автомобиль · г. Уфа</strong></div>
+                <div><span>Номер макета</span><strong id="cert-id">DEMO-RB-OSAGO-0001</strong></div>
+                <div><span>Размер скидки</span><strong id="cert-pct" class="text-blue">12%</strong></div>
+                <div><span>Период расчета</span><strong>12 месяцев · пример</strong></div>
+              </div>
+              <div class="cert-qr" aria-label="QR-код сертификата">
+                <svg viewBox="0 0 80 80" width="84" height="84">
+                  <rect width="80" height="80" rx="6" fill="#FFFFFF"/>
+                  <rect x="6" y="6" width="22" height="22" rx="2" fill="#0F172A"/>
+                  <rect x="10" y="10" width="14" height="14" fill="#FFFFFF"/>
+                  <rect x="13" y="13" width="8" height="8" fill="#0F172A"/>
+                  <rect x="52" y="6" width="22" height="22" rx="2" fill="#0F172A"/>
+                  <rect x="56" y="10" width="14" height="14" fill="#FFFFFF"/>
+                  <rect x="59" y="13" width="8" height="8" fill="#0F172A"/>
+                  <rect x="6" y="52" width="22" height="22" rx="2" fill="#0F172A"/>
+                  <rect x="10" y="56" width="14" height="14" fill="#FFFFFF"/>
+                  <rect x="13" y="59" width="8" height="8" fill="#0F172A"/>
+                  <rect x="34" y="10" width="6" height="6" fill="#0F172A"/>
+                  <rect x="34" y="22" width="12" height="6" fill="#0F172A"/>
+                  <rect x="34" y="34" width="12" height="12" fill="#0D4CD3"/>
+                  <rect x="52" y="34" width="10" height="6" fill="#0F172A"/>
+                  <rect x="66" y="34" width="8" height="14" fill="#0F172A"/>
+                  <rect x="34" y="52" width="8" height="8" fill="#0F172A"/>
+                  <rect x="48" y="52" width="12" height="6" fill="#0F172A"/>
+                  <rect x="46" y="64" width="14" height="10" fill="#0F172A"/>
+                  <rect x="64" y="60" width="10" height="14" fill="#0F172A"/>
+                </svg>
+                <span>Демо-код · не документ</span>
+              </div>
+            </div>
+
+            <div class="insurer-box">
+              <label for="insurer-select">Посмотреть пример скидки для страховой (демо):</label>
+              <div class="insurer-row">
+                <select id="insurer-select">
+                  <option value="АльфаСтрахование">АльфаСтрахование</option>
+                  <option value="Ингосстрах">Ингосстрах</option>
+                  <option value="РЕСО-Гарантия">РЕСО-Гарантия</option>
+                  <option value="ВСК">Страховой Дом ВСК</option>
+                  <option value="Т-Страхование">Т-Страхование</option>
+                </select>
+                <button type="button" id="btn-send-insurer" class="btn btn-gu">Показать результат</button>
+              </div>
+              <div id="insurer-toast" class="toast-msg" role="status" aria-live="polite"></div>
+            </div>
+          </div>
+
+          <div class="card info-friendly-card">
+            <h3>Как сохранить максимальную скидку</h3>
+            <ul>
+              <li>Скидка пересчитывается один раз в год при продлении полиса ОСАГО.</li>
+              <li>Если штраф отменен после обжалования на Госуслугах, он автоматически удаляется из счетчика.</li>
+              <li>Нарушения свыше 3 в год обнуляют скидку только на ближайший страховой период - в следующем году счетчик снова начинается с нуля.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Модальное окно синхронизации через Госуслуги (ЕСИА) -->
+  <div id="gu-modal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="gu-modal-title">
+    <div class="modal-card">
+      <div class="modal-head">
+        <div class="gu-wordmark">
+          <span class="gu-blue">гос</span><span class="gu-red">услуги</span>
+          <small>Имитация · без подключения</small>
+        </div>
+        <button type="button" id="btn-close-modal" class="close-btn" aria-label="Закрыть">&times;</button>
+      </div>
+
+      <div id="modal-step-consent">
+        <h3 id="gu-modal-title">Демонстрация сценария ЕСИА</h3>
+        <p class="modal-desc">В рабочем сервисе здесь могло бы появиться согласие на чтение данных. В этом прототипе реальные данные не запрашиваются и никуда не отправляются.</p>
+        <ul class="consent-list">
+          <li>Показ демонстрационного профиля и расчетного периода</li>
+          <li>Пример числа постановлений без реальной истории водителя</li>
+          <li>Расчет скидки по выбранному сценарию</li>
+        </ul>
+        <div class="modal-notice">
+          Это макет интерфейса: входа в ЕСИА, запроса к ГИБДД и передачи в страховую нет.
+        </div>
+        <div class="modal-actions">
+          <button type="button" id="btn-confirm-gu" class="btn btn-gu">Запустить демонстрацию</button>
+          <button type="button" id="btn-cancel-gu" class="btn btn-soft">Отмена</button>
+        </div>
+      </div>
+
+      <div id="modal-step-loading" class="hidden sync-loading">
+        <div class="spinner"></div>
+        <h3 id="loading-title">Подключение к ЕСИА...</h3>
+        <p id="loading-sub" class="muted-label">Проверка учетной записи водителя</p>
+      </div>
+    </div>
+  </div>
+
+  <footer class="gu-footer">
+    <div class="container gu-footer-inner">
+      <span>ОСАГО+ Уфа · Прототип региональной системы поощрения за вождение без нарушений</span>
+      <a href="../index.html">Перейти на главную карту Уфы и умных дорог</a>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
