@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Безопасная Уфа | Скидка на ОСАГО, карта камер и умные дороги</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="vendor/leaflet.css">
+  <link rel="stylesheet" href="styles.css?v=4">
+</head>
+<body>
+  <!-- Верхняя навигация -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="#top" class="brand">
+        <span class="brand-mark" aria-hidden="true">
+          <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+            <rect width="28" height="28" rx="6" fill="#1D4ED8"/>
+            <path d="M14 5L22 9V14.5C22 19.2 18.6 22.8 14 24C9.4 22.8 6 19.2 6 14.5V9L14 5Z" stroke="white" stroke-width="1.8" fill="none"/>
+            <path d="M10.5 14.2L12.8 16.5L17.8 11.5" stroke="#34D399" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </span>
+        <span class="brand-text">
+          <strong>Безопасная Уфа</strong>
+          <small>Республика Башкортостан</small>
+        </span>
+      </a>
+
+      <nav class="main-nav" aria-label="Основная навигация">
+        <a href="#osago-rules">Условия ОСАГО</a>
+        <a href="#calculator">Калькулятор</a>
+        <a href="#map-section">Карта Уфы</a>
+        <a href="#smart-roads">Умные дороги</a>
+        <a href="#cabinet">Статус водителя</a>
+      </nav>
+
+      <div class="header-actions">
+        <a href="osago/index.html" class="btn btn-outline btn-sm">Прототип ОСАГО + Госуслуги</a>
+        <a href="#map-section" class="btn btn-primary btn-sm">Карта Уфы</a>
+      </div>
+    </div>
+  </header>
+
+  <main id="top">
+    <!-- Главный экран -->
+    <section class="hero">
+      <div class="container hero-grid">
+        <div class="hero-content">
+          <div class="eyebrow">Региональная программа профилактики ДТП · г. Уфа</div>
+          <h1>Скидка на ОСАГО за аккуратное вождение и умные дороги Уфы</h1>
+          <p class="hero-lead">
+            Понятная система без баллов: при нарушении действует обычный штраф, а за соблюдение ПДД в течение года водитель получает прямую скидку на полис ОСАГО. Параллельно на самых опасных участках Уфы внедряются модульные технологии «Умной дороги», адаптированные к зиме до -35°C.
+          </p>
+          <div class="hero-actions">
+            <a href="#map-section" class="btn btn-primary">Открыть подробную карту Уфы</a>
+            <a href="osago/index.html" class="btn btn-outline">Открыть прототип «ОСАГО + Госуслуги»</a>
+          </div>
+          <div class="hero-trust">
+            <span>Без балльной системы</span>
+            <span class="dot"></span>
+            <span>Прозрачный учет нарушений за год</span>
+            <span class="dot"></span>
+            <span>Синхронизация камер OpenStreetMap</span>
+          </div>
+        </div>
+
+        <aside class="hero-visual-stack">
+          <figure class="hero-photo-card">
+            <img src="images/hero-ufa-road.jpg" alt="Зимний проспект в Уфе в сумерках с современным освещением" loading="eager">
+            <figcaption>г. Уфа: профилактика аварийности на зимних магистралях и переходах</figcaption>
+          </figure>
+
+          <div class="hero-panel" aria-label="Шкала скидки на ОСАГО">
+            <div class="panel-header">
+              <span class="panel-title">Скидка на ОСАГО по итогам года</span>
+              <span class="badge badge-blue">Шаг 3%</span>
+            </div>
+            <div class="scale-preview compact-scale">
+              <div class="scale-row scale-row-best"><span>0 нарушений за год</span><strong>-12%</strong></div>
+              <div class="scale-row"><span>1 нарушение за год</span><strong>-9%</strong></div>
+              <div class="scale-row"><span>2 нарушения за год</span><strong>-6%</strong></div>
+              <div class="scale-row"><span>3 нарушения за год</span><strong>-3%</strong></div>
+              <div class="scale-row scale-row-zero"><span>4 и более нарушений</span><strong>0% (без скидки)</strong></div>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- Раздел 1: Подробная карта Уфы (поднята высоко для максимальной наглядности) -->
+    <section id="map-section" class="section section-map-featured">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <div class="section-kicker">Интерактивный мониторинг г. Уфы</div>
+            <h2>Подробная карта камер, опасных участков и «Умных дорог» Уфы</h2>
+          </div>
+          <p class="section-desc">
+            Синхронизация с открытыми данными камер OpenStreetMap (Overpass API), выделенные транспортные коридоры, 12 ключевых зон риска и пилотные участки 3 этапов внедрения.
+          </p>
+        </div>
+
+        <!-- Сводка по карте -->
+        <div class="map-kpi-strip">
+          <div class="map-kpi">
+            <span class="map-kpi-label">Камер контроля на карте</span>
+            <strong id="stat-total-cameras">24</strong>
+            <small id="stat-osm-note">OSM + открытый реестр</small>
+          </div>
+          <div class="map-kpi">
+            <span class="map-kpi-label">Опасных участков и пилотов</span>
+            <strong id="stat-total-zones">12</strong>
+            <small>По всем 7 районам Уфы</small>
+          </div>
+          <div class="map-kpi">
+            <span class="map-kpi-label">Пилотов «Умной дороги»</span>
+            <strong>8 участков</strong>
+            <small>Переход 2.0, LED, IoT-свет</small>
+          </div>
+          <div class="map-kpi">
+            <span class="map-kpi-label">Ключевых магистралей</span>
+            <strong>4 коридора</strong>
+            <small>Октября, Салавата, Р-240, М-5</small>
+          </div>
+        </div>
+
+        <!-- Панель управления картой -->
+        <div class="map-toolbar">
+          <div class="filter-group" role="group" aria-label="Фильтры слоев карты">
+            <button class="filter-btn active" data-filter="all">Все слои</button>
+            <button class="filter-btn" data-filter="camera">Камеры (OSM)</button>
+            <button class="filter-btn" data-filter="danger">Опасные участки</button>
+            <button class="filter-btn" data-filter="tech1">Этап I: Переход 2.0</button>
+            <button class="filter-btn" data-filter="tech2">Этап II: LED-разметка</button>
+            <button class="filter-btn" data-filter="tech3">Этап III: Световой купол</button>
+          </div>
+
+          <div class="sync-controls">
+            <div class="basemap-switch" role="group" aria-label="Вид карты">
+              <button type="button" class="basemap-btn active" data-basemap="2gis">2ГИС</button>
+              <button type="button" class="basemap-btn" data-basemap="osm">OSM</button>
+              <button type="button" class="basemap-btn" data-basemap="sat">Спутник</button>
+            </div>
+            <button id="btn-sync-osm" class="btn btn-outline btn-sm">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+              <span>Обновить камеры OSM</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="district-bar" id="district-bar" aria-label="Быстрый переход по районам Уфы"></div>
+
+        <!-- 2ГИС-подобный полноразмерный контейнер карты с плавающей панелью -->
+        <div class="gis-stage">
+          <div class="gis-panel" id="map-details">
+            <div class="gis-search-box">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#64748B" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+              <input type="search" id="gis-quick-search" placeholder="Найти улицу, мост или камеру Уфы..." aria-label="Поиск по карте Уфы">
+            </div>
+
+            <div class="gis-quick-list" id="gis-quick-list"></div>
+
+            <div class="gis-detail-card">
+              <div class="sidebar-header">
+                <span class="badge badge-blue" id="detail-badge">Этап II: LED-разметка</span>
+                <h3 id="detail-title">Бельский мост (Оренбургский тракт)</h3>
+                <div class="detail-sub" id="detail-district">Кировский район · Лимит: 60 км/ч</div>
+              </div>
+              <p class="detail-desc" id="detail-desc">
+                Стратегический южный въезд в Уфу с высокой ветровой нагрузкой над рекой Белой и частым внезапным обледенением асфальта.
+              </p>
+              <div class="detail-metrics">
+                <div class="detail-row">
+                  <span>Индекс опасности и камеры</span>
+                  <strong id="detail-risk">94 / 100 (Высокий) · 4 камеры</strong>
+                </div>
+                <div class="detail-row">
+                  <span>Основные нарушения и риски</span>
+                  <strong id="detail-violations">Превышение скорости на скользком покрытии, несоблюдение дистанции, выезд из полосы</strong>
+                </div>
+                <div class="detail-row">
+                  <span>Прогноз эффекта</span>
+                  <strong id="detail-forecast">Снижение зимних ДТП и заносов на 30-35%</strong>
+                </div>
+                <div class="detail-row highlight-row">
+                  <span>Как помогает избежать нарушений</span>
+                  <strong id="detail-prevention">Бронированные LED-катафоты загораются синим при температуре полотна &lt;= 0°C, заранее предупреждая о гололеде.</strong>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="gis-map-wrap">
+            <div id="ufa-map" aria-label="Интерактивная карта Уфы в стиле 2ГИС"></div>
+            <div class="map-status-bar">
+              <span id="sync-status-text">Загрузка открытых данных камер Уфы...</span>
+              <span class="map-counts">
+                Показано камер: <strong id="count-cameras">0</strong> |
+                Зон: <strong id="count-zones">0</strong>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Графическая аналитика по Уфе -->
+        <div class="charts-grid">
+          <div class="card chart-card">
+            <div class="chart-head">
+              <h3>Рейтинг риска по районам Уфы</h3>
+              <span class="badge badge-slate">Индекс 0-100</span>
+            </div>
+            <div id="chart-districts" class="bar-chart"></div>
+          </div>
+
+          <div class="card chart-card">
+            <div class="chart-head">
+              <h3>Структура нарушений по камерам</h3>
+              <span class="badge badge-slate">Открытые данные</span>
+            </div>
+            <div class="donut-wrap">
+              <svg viewBox="0 0 140 140" class="donut-svg" aria-label="Диаграмма структуры нарушений">
+                <circle cx="70" cy="70" r="52" fill="none" stroke="#E2E8F0" stroke-width="18"/>
+                <circle cx="70" cy="70" r="52" fill="none" stroke="#1D4ED8" stroke-width="18" stroke-dasharray="137.2 326.7" stroke-dashoffset="0" transform="rotate(-90 70 70)"/>
+                <circle cx="70" cy="70" r="52" fill="none" stroke="#DC2626" stroke-width="18" stroke-dasharray="78.4 326.7" stroke-dashoffset="-137.2" transform="rotate(-90 70 70)"/>
+                <circle cx="70" cy="70" r="52" fill="none" stroke="#D97706" stroke-width="18" stroke-dasharray="62.1 326.7" stroke-dashoffset="-215.6" transform="rotate(-90 70 70)"/>
+                <circle cx="70" cy="70" r="52" fill="none" stroke="#059669" stroke-width="18" stroke-dasharray="49.0 326.7" stroke-dashoffset="-277.7" transform="rotate(-90 70 70)"/>
+                <text x="70" y="67" text-anchor="middle" font-size="18" font-weight="700" fill="#0F172A">100%</text>
+                <text x="70" y="83" text-anchor="middle" font-size="10" fill="#64748B">фиксаций</text>
+              </svg>
+              <ul class="donut-legend">
+                <li><i style="background:#1D4ED8"></i><span>Скоростной режим</span><strong>42%</strong></li>
+                <li><i style="background:#DC2626"></i><span>Пешеходные переходы</span><strong>24%</strong></li>
+                <li><i style="background:#D97706"></i><span>Стоп-линия / красный</span><strong>19%</strong></li>
+                <li><i style="background:#059669"></i><span>Полосы / гололед</span><strong>15%</strong></li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="card chart-card">
+            <div class="chart-head">
+              <h3>Прогноз снижения нарушений</h3>
+              <span class="badge badge-green">Эффект программы</span>
+            </div>
+            <div class="impact-bars">
+              <div class="impact-row">
+                <div class="impact-label"><span>Переход 2.0 (Инорс, Сипайлово, Черниковка)</span><strong>-60%</strong></div>
+                <div class="impact-track"><div class="impact-fill" style="width: 60%; background: #DC2626;"></div></div>
+              </div>
+              <div class="impact-row">
+                <div class="impact-label"><span>LED-разметка на мостах (гололед)</span><strong>-35%</strong></div>
+                <div class="impact-track"><div class="impact-fill" style="width: 35%; background: #2563EB;"></div></div>
+              </div>
+              <div class="impact-row">
+                <div class="impact-label"><span>Адаптивный свет (ночная экономия)</span><strong>-65%</strong></div>
+                <div class="impact-track"><div class="impact-fill" style="width: 65%; background: #059669;"></div></div>
+              </div>
+              <div class="impact-row">
+                <div class="impact-label"><span>Скидка на ОСАГО (0-3 наруш./год)</span><strong>-28%</strong></div>
+                <div class="impact-track"><div class="impact-fill" style="width: 28%; background: #1D4ED8;"></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Интерактивный реестр опасных участков Уфы под картой -->
+        <div class="registry-card card">
+          <div class="registry-head">
+            <div>
+              <h3>Реестр опасных участков и пилотных зон Уфы</h3>
+              <p class="muted-text">Нажмите на любую строку, чтобы перейти к участку на карте и открыть подробную карточку.</p>
+            </div>
+            <div class="registry-search">
+              <input type="search" id="zone-search" placeholder="Поиск по улице, мосту или району..." aria-label="Поиск по участкам Уфы">
+            </div>
+          </div>
+
+          <div class="table-scroll">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Участок / адрес в Уфе</th>
+                  <th>Район</th>
+                  <th>Индекс риска</th>
+                  <th>Основные нарушения</th>
+                  <th>Технология / мера</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody id="zones-table-body">
+                <!-- Заполняется из app.js -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Раздел 2: Условия скидки на ОСАГО -->
+    <section id="osago-rules" class="section section-alt">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <div class="section-kicker">Механика поощрения</div>
+            <h2>Скидка на ОСАГО без балльной системы</h2>
+          </div>
+          <p class="section-desc">
+            Простая логика, понятная каждому водителю: нарушил ПДД - оплачиваешь обычный штраф; соблюдаешь правила в течение года - получаешь гарантированную скидку на ОСАГО.
+          </p>
+        </div>
+
+        <div class="tiers-bar tiers-5">
+          <div class="tier-item tier-highlight">
+            <span class="tier-score">0 нарушений</span>
+            <strong>Скидка 12%</strong>
+            <p>Полный год без зафиксированных нарушений ПДД</p>
+          </div>
+          <div class="tier-item">
+            <span class="tier-score">1 нарушение</span>
+            <strong>Скидка 9%</strong>
+            <p>Обычный штраф + сохранение скидки 9% при продлении ОСАГО</p>
+          </div>
+          <div class="tier-item">
+            <span class="tier-score">2 нарушения</span>
+            <strong>Скидка 6%</strong>
+            <p>Обычные штрафы + скидка 6% на следующий полис</p>
+          </div>
+          <div class="tier-item">
+            <span class="tier-score">3 нарушения</span>
+            <strong>Скидка 3%</strong>
+            <p>Минимальная скидка 3% по итогам года</p>
+          </div>
+          <div class="tier-item tier-muted">
+            <span class="tier-score">4+ нарушений</span>
+            <strong>Скидки нет (0%)</strong>
+            <p>Полис оформляется на стандартных условиях без скидки</p>
+          </div>
+        </div>
+
+        <!-- 4 шага работы системы -->
+        <div class="steps-grid">
+          <div class="step-card">
+            <span class="step-num">01</span>
+            <h4>Обычная фиксация камерами</h4>
+            <p>Используются уже работающие комплексы фотовидеофиксации Уфы. Никаких дополнительных трекеров в машину ставить не нужно.</p>
+          </div>
+          <div class="step-card">
+            <span class="step-num">02</span>
+            <h4>Годовой счетчик нарушений</h4>
+            <p>Учитывается только количество вступивших в силу постановлений за последние 12 месяцев. Без сложных баллов и формул.</p>
+          </div>
+          <div class="step-card">
+            <span class="step-num">03</span>
+            <h4>Автоматический расчет скидки</h4>
+            <p>Каждое нарушение снижает будущую скидку на 3% (12% -> 9% -> 6% -> 3% -> 0%). При нарушении штраф оплачивается как обычно.</p>
+          </div>
+          <div class="step-card">
+            <span class="step-num">04</span>
+            <h4>Применение при продлении ОСАГО</h4>
+            <p>При оформлении нового полиса страховая компания автоматически применяет региональную скидку по данным годового учета.</p>
+          </div>
+        </div>
+
+        <!-- Частые вопросы -->
+        <div class="faq-grid">
+          <details class="faq-item" open>
+            <summary>Суммируется ли эта скидка с обычным КБМ?</summary>
+            <p>Да, региональная скидка за аккуратное вождение без нарушений применяется дополнительно к базовому коэффициенту бонус-малус (КБМ), усиливая финансовую мотивацию соблюдать ПДД.</p>
+          </details>
+          <details class="faq-item">
+            <summary>Что будет, если штраф вынесен ошибочно и позже отменен?</summary>
+            <p>В счетчик попадают только постановления, вступившие в законную силу. Отмененный после обжалования штраф автоматически исключается из расчета и не уменьшает скидку.</p>
+          </details>
+          <details class="faq-item">
+            <summary>Почему убрана балльная система?</summary>
+            <p>Балльные системы сложны для понимания и часто воспринимаются как скрытое наказание. Простая шкала «число нарушений за год -> процент скидки на ОСАГО» прозрачна и понятна каждому.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- Раздел 3: Калькулятор скидки на ОСАГО -->
+    <section id="calculator" class="section">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <div class="section-kicker">Интерактивный расчет</div>
+            <h2>Калькулятор скидки на ОСАГО</h2>
+          </div>
+          <p class="section-desc">
+            Укажите стоимость вашего полиса ОСАГО и количество нарушений за год, чтобы сразу увидеть итоговую цену и экономию.
+          </p>
+        </div>
+
+        <div class="calc-grid">
+          <div class="calc-controls card">
+            <div class="form-group">
+              <label for="calc-osago">Базовая стоимость полиса ОСАГО: <strong id="val-osago">10 000 ₽</strong></label>
+              <input type="range" id="calc-osago" min="4000" max="25000" step="500" value="10000">
+              <div class="range-marks"><span>4 000 ₽</span><span>10 000 ₽</span><span>17 500 ₽</span><span>25 000 ₽</span></div>
+            </div>
+
+            <div class="form-group" style="margin-bottom: 0;">
+              <label>Количество нарушений ПДД за год:</label>
+              <div class="violation-selector" id="violation-selector" role="group" aria-label="Количество нарушений за год">
+                <button type="button" class="viol-btn active" data-violations="0">0 нарушений</button>
+                <button type="button" class="viol-btn" data-violations="1">1 нарушение</button>
+                <button type="button" class="viol-btn" data-violations="2">2 нарушения</button>
+                <button type="button" class="viol-btn" data-violations="3">3 нарушения</button>
+                <button type="button" class="viol-btn" data-violations="4">4 и более</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="calc-result card">
+            <div class="calc-result-head">
+              <div>
+                <span class="muted-label">Итоговая стоимость ОСАГО со скидкой</span>
+                <div class="total-savings" id="res-final-price">8 800 ₽</div>
+              </div>
+              <div class="tier-badge" id="res-discount-badge">Скидка: 12%</div>
+            </div>
+
+            <ul class="breakdown-list">
+              <li><span>Базовая цена полиса</span><strong id="res-base">10 000 ₽</strong></li>
+              <li><span>Зафиксировано нарушений за год</span><strong id="res-viol-label">0 нарушений</strong></li>
+              <li><span>Ваша экономия на ОСАГО</span><strong id="res-saving" style="color: var(--green-700);">- 1 200 ₽</strong></li>
+            </ul>
+
+            <div class="calc-note" id="res-status-note">
+              Максимальная скидка 12% за год без нарушений ПДД.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Раздел 4: Технологии «Умной дороги» из доклада с иллюстрациями -->
+    <section id="smart-roads" class="section section-alt">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <div class="section-kicker">Аналитический доклад по г. Уфе</div>
+            <h2>Технологии «Умной дороги» для сурового климата Уфы</h2>
+          </div>
+          <p class="section-desc">
+            В Башкортостане 6 месяцев держится снег, а шипованная резина полностью стирает пластиковую разметку. Точечное внедрение выносливых модулей помогает водителю вовремя видеть опасность и не получать случайных штрафов.
+          </p>
+        </div>
+
+        <div class="climate-strip">
+          <div class="climate-item">
+            <strong>6 месяцев</strong>
+            <span>Снежный покров и слякоть скрывают обычную разметку</span>
+          </div>
+          <div class="climate-item">
+            <strong>100% износ</strong>
+            <span>Пластиковая разметка стирается шипами за один сезон</span>
+          </div>
+          <div class="climate-item">
+            <strong>до -35°C</strong>
+            <span>Критические перепады температур и наледь на мостах</span>
+          </div>
+          <div class="climate-item">
+            <strong>Модульность</strong>
+            <span>Отказ от хрупких стеклянных дорог в пользу точечных решений</span>
+          </div>
+        </div>
+
+        <div class="tech-list">
+          <!-- Технология 01 -->
+          <article class="tech-card">
+            <div class="tech-meta">
+              <span class="tech-num">Технология 01 · Краткосрочная перспектива</span>
+              <span class="badge badge-red">Этап I: Инорс, Сипайлово, Черниковка</span>
+            </div>
+            <div class="tech-visual-grid">
+              <figure class="tech-figure">
+                <img src="images/tech-crosswalk.jpg" alt="Умный пешеходный переход 2.0 с зеленой лазерной зеброй на зимней дороге" loading="lazy">
+                <figcaption>Визуализация: лазерная проекция зебры поверх снега, радар 10-15 м и световой коридор</figcaption>
+              </figure>
+              <div class="tech-info">
+                <h3>Умный пешеходный переход 2.0 (Интеллектуальная проекция)</h3>
+                <p>На П-образных опорах устанавливаются микроволновые радары и камеры машинного зрения. При приближении человека за 10-15 м включается направленный световой коридор, поверх снега и луж проецируется яркая лазерная «зебра», а за 50-100 м загораются LED-табло для водителей.</p>
+                <div class="tech-specs">
+                  <div><span>Обнаружение пешехода</span><strong>за 10-15 м</strong></div>
+                  <div><span>Предупреждение водителя</span><strong>за 50-100 м</strong></div>
+                  <div><span>Износ от шипов</span><strong>0% (свет)</strong></div>
+                </div>
+                <div class="pros-cons">
+                  <div><strong>Преимущества:</strong> четкий контур в любую погоду, работа на полную мощность только при наличии пешехода.</div>
+                  <div><strong>Риски и решение:</strong> загрязнение оптики в метель решается защитными козырьками и плановой очисткой.</div>
+                </div>
+                <div class="tech-integration">
+                  <div class="integration-label">Польза для водителя и ОСАГО</div>
+                  <p>Заблаговременный световой сигнал за 50-100 м исключает случайный непропуск пешехода в сумерки и помогает сохранить годовую скидку на ОСАГО.</p>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- Технология 02 -->
+          <article class="tech-card">
+            <div class="tech-meta">
+              <span class="tech-num">Технология 02 · Среднесрочная перспектива</span>
+              <span class="badge badge-blue">Этап II: Бельский, Затонский мосты, Каменная переправа</span>
+            </div>
+            <div class="tech-visual-grid">
+              <figure class="tech-figure">
+                <img src="images/tech-led-markers.jpg" alt="Интерактивная синяя LED-разметка на зимнем мосту в Уфе" loading="lazy">
+                <figcaption>Визуализация: бронированные LED-катафоты в синем режиме предупреждения о гололеде</figcaption>
+              </figure>
+              <div class="tech-info">
+                <h3>Интерактивная LED-разметка (термочувствительные катафоты)</h3>
+                <p>Вместо хрупких стеклянных панелей в асфальт с интервалом монтируются бронированные светодиодные маркеры с автономным питанием и датчиками температуры. При падении температуры покрытия до 0°C и ниже они светятся синим (гололед), а при заторе впереди - красным.</p>
+                <div class="tech-specs">
+                  <div><span>Порог сигнала гололеда</span><strong>0°C и ниже</strong></div>
+                  <div><span>Питание модулей</span><strong>Автономное</strong></div>
+                  <div><span>Прокладка кабелей</span><strong>Не требуется</strong></div>
+                </div>
+                <div class="pros-cons">
+                  <div><strong>Преимущества:</strong> идеальный ориентир в пургу, когда контуры полос сливаются со снегом.</div>
+                  <div><strong>Риски и решение:</strong> грязевая пленка на линзах и фрезерование при ремонте требуют регламентной мойки и учета в картах дорожных работ.</div>
+                </div>
+                <div class="tech-integration">
+                  <div class="integration-label">Польза для водителя и ОСАГО</div>
+                  <p>Предотвращает случайный выезд из полосы в метель и резкие заносы на обледенелых мостах Уфы.</p>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- Технология 03 -->
+          <article class="tech-card">
+            <div class="tech-meta">
+              <span class="tech-num">Технология 03 · Долгосрочная перспектива</span>
+              <span class="badge badge-green">Этап III: Трасса Уфа-Аэропорт, Восточный выезд</span>
+            </div>
+            <div class="tech-visual-grid">
+              <figure class="tech-figure">
+                <img src="images/tech-adaptive-light.jpg" alt="Адаптивный световой купол на ночной загородной трассе" loading="lazy">
+                <figcaption>Визуализация: адаптивное IoT-освещение разгорается до 100% в зоне движения автомобиля</figcaption>
+              </figure>
+              <div class="tech-info">
+                <h3>Адаптивный световой купол (IoT-освещение трасс)</h3>
+                <p>В мачты освещения внедряются IoT-контроллеры и радары. В дежурном режиме на пустой трассе фонари горят на 15-20% мощности. При приближении автомобиля опоры впереди плавно разгораются до 100%, создавая комфортный «световой купол», и затухают после проезда.</p>
+                <div class="tech-specs">
+                  <div><span>Дежурный режим</span><strong>15-20%</strong></div>
+                  <div><span>Экономия ночью</span><strong>60-70%</strong></div>
+                  <div><span>При сбое связи</span><strong>100% свет</strong></div>
+                </div>
+                <div class="pros-cons">
+                  <div><strong>Преимущества:</strong> радикальное снижение расходов города на электричество, меньше светового загрязнения и усталости водителя.</div>
+                  <div><strong>Риски и решение:</strong> отказоустойчивый режим автоматически переводит опоры на 100% при обрыве IoT-сети, исключая блэкаут.</div>
+                </div>
+                <div class="tech-integration">
+                  <div class="integration-label">Польза для водителя и города</div>
+                  <p>Уменьшает зрительную усталость на ночных магистралях, помогая водителю точно соблюдать скоростной режим и знаки.</p>
+                </div>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Раздел 5: Статус водителя -->
+    <section id="cabinet" class="section">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <div class="section-kicker">Интерфейс для горожанина</div>
+            <h2>Пример статуса водителя за год</h2>
+          </div>
+          <p class="section-desc">
+            Простой экран проверки: сколько нарушений зафиксировано в текущем году и какая скидка на ОСАГО будет применена при продлении полиса.
+          </p>
+        </div>
+
+        <div class="cabinet-grid">
+          <div class="card driver-summary">
+            <div class="driver-head">
+              <div class="avatar">Д</div>
+              <div>
+                <h3>Демо-водитель</h3>
+                <span class="muted-text">Демонстрационный профиль · г. Уфа</span>
+              </div>
+              <span class="badge badge-green" id="cab-discount-badge">Скидка ОСАГО: 9%</span>
+            </div>
+
+            <div class="score-block">
+              <div class="score-ring" id="cab-ring">
+                <strong id="cab-violations">1</strong>
+                <span>наруш./год</span>
+              </div>
+              <div class="score-stats">
+                <div><span>Расчетный период</span><strong>12 месяцев</strong></div>
+                <div><span>Текущая скидка ОСАГО</span><strong id="cab-discount-text">9%</strong></div>
+                <div><span>Запас до потери скидки</span><strong id="cab-remaining">3 нарушения</strong></div>
+              </div>
+            </div>
+
+            <div class="sim-actions">
+              <button id="btn-add-viol" class="btn btn-outline btn-sm">Смоделировать +1 нарушение</button>
+              <button id="btn-reset-viol" class="btn btn-primary btn-sm">Сбросить на 0 нарушений (12%)</button>
+            </div>
+            <div id="cab-toast" class="cab-toast" role="status" aria-live="polite"></div>
+          </div>
+
+          <div class="card">
+            <div class="feed-header">
+              <h3>Шкала скидки на ОСАГО</h3>
+              <span class="muted-text">Текущая позиция выделена</span>
+            </div>
+            <div class="scale-preview" id="cab-scale-list"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div>
+        <strong>Безопасная Уфа</strong>
+        <p>Региональная инициатива профилактики нарушений ПДД (скидка на ОСАГО без балльной системы) и внедрения модульных технологий «Умной дороги» в г. Уфе.</p>
+      </div>
+      <div class="footer-meta">
+        <span>Карта и открытые данные камер: OpenStreetMap &amp; Overpass API</span>
+        <span>Локальный прототип · 2026</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="vendor/leaflet.js"></script>
+  <script src="data/ufa-data.js?v=4"></script>
+  <script src="app.js?v=4"></script>
+</body>
+</html>
